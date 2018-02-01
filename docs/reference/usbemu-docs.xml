@@ -55,9 +55,11 @@
     <title>API Reference</title>
     <chapter id="core">
       <title>Core Classes</title>
+      <xi:include href="xml/usbemu-usb.xml"/>
       <xi:include href="xml/usbemu-device.xml"/>
       <xi:include href="xml/usbemu-configuration.xml"/>
       <xi:include href="xml/usbemu-interface.xml"/>
+      <xi:include href="xml/usbemu-urb.xml"/>
       <xi:include href="xml/usbemu-enums.xml"/>
       <xi:include href="xml/usbemu-errors.xml"/>
     </chapter>

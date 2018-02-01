@@ -50,6 +50,7 @@ lib_LTLIBRARIES += \
   usbemu/libusbemu.la
 
 usbemu_libusbemu_la_SOURCES = \
+  usbemu/internal/types.h \
   usbemu/internal/utils.c \
   usbemu/internal/utils.h \
   usbemu/usbemu.h \
@@ -60,9 +61,15 @@ usbemu_libusbemu_la_SOURCES = \
   usbemu/usbemu-errors.c \
   usbemu/usbemu-errors.h \
   usbemu/usbemu-interface.c \
-  usbemu/usbemu-interface.h
+  usbemu/usbemu-interface.h \
+  usbemu/usbemu-urb.c \
+  usbemu/usbemu-urb.h \
+  usbemu/usbemu-usb.h
+usbemu_libusbemu_la_CPPFLAGS = \
+  $(AM_CPPFLAGS) \
+  -DLIBUSBEMU_COMPILATION
 usbemu_libusbemu_la_CFLAGS = \
-  -DLIBUSBEMU_COMPILATION \
+  $(AM_CFLAGS) \
   $(BASE_DEPS_CFLAGS)
 usbemu_libusbemu_la_LIBADD = \
   $(BASE_DEPS_LIBS)
@@ -74,7 +81,9 @@ usbemu_include_HEADERS += \
   usbemu/usbemu-configuration.h \
   usbemu/usbemu-device.h \
   usbemu/usbemu-errors.h \
-  usbemu/usbemu-interface.h
+  usbemu/usbemu-interface.h \
+  usbemu/usbemu-urb.h \
+  usbemu/usbemu-usb.h
 
 ###############################
 ## libusbemu - enums
@@ -84,10 +93,8 @@ libusbemu_enum_built_sources = \
   usbemu/usbemu-enums.h
 
 libusbemu_enum_check_headers = \
-  usbemu/usbemu-configuration.h \
-  usbemu/usbemu-device.h \
   usbemu/usbemu-errors.h \
-  usbemu/usbemu-interface.h
+  usbemu/usbemu-usb.h
 
 $(libusbemu_enum_built_sources): Makefile.am $(libusbemu_enum_check_headers) \
   $(libusbemu_enum_built_sources:=.template)
@@ -108,6 +115,7 @@ usbemu_include_HEADERS += \
 ## libusbemu - Linux VHCI support
 
 usbemu_libusbemu_la_SOURCES += \
+  usbemu/internal/usbip.c \
   usbemu/internal/usbip.h \
   usbemu/internal/vhci.c \
   usbemu/internal/vhci.h \
@@ -128,6 +136,7 @@ test_ltlibraries = \
   tests/libusbemu-test.la
 
 tests_libusbemu_test_la_CFLAGS = \
+  $(AM_CFLAGS) \
   $(BASE_DEPS_CFLAGS)
 tests_libusbemu_test_la_LIBADD = \
   $(BASE_DEPS_LIBS) \
@@ -137,6 +146,7 @@ tests_libusbemu_test_la_SOURCES = \
   tests/test-object.h
 
 test_cflags = \
+  $(AM_CFLAGS) \
   $(BASE_DEPS_CFLAGS)
 test_ldadd = \
   $(BASE_DEPS_LIBS) \
@@ -181,6 +191,7 @@ bin_PROGRAMS += \
 src_usbemu_SOURCES = \
   src/usbemu.c
 src_usbemu_CFLAGS = \
+  $(AM_CFLAGS) \
   $(BASE_DEPS_CFLAGS)
 src_usbemu_LDADD = \
   $(BASE_DEPS_LIBS) \
